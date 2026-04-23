@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.fakestoreapp.components.ProductItem
 import com.example.fakestoreapp.models.Product
 import com.example.fakestoreapp.models.productList
@@ -31,7 +33,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
 fun ProductsScreen(
-    innerPadding: PaddingValues = PaddingValues(10.dp)
+    innerPadding: PaddingValues = PaddingValues(10.dp),
+    navController: NavController = rememberNavController()
 ){
     val BASE_URL = "https://fakestoreapi.com/"
     // que necesito una variable con by remember
@@ -87,7 +90,10 @@ fun ProductsScreen(
         ) {
             items(products){ product ->
                 ProductItem(
-                    product
+                    product,
+                    onClick = {
+                        navController.navigate("products/${product.id}")
+                    }
                 )
             }
         }
